@@ -8,7 +8,7 @@ export interface ICartItem {
   quantity?: number | null;
   createdAt?: dayjs.Dayjs | null;
   updatedAt?: dayjs.Dayjs | null;
-  product?: IProduct | null;
+  prod?: IProduct | null;
   cart?: ICart | null;
 }
 
@@ -19,7 +19,7 @@ export class CartItem implements ICartItem {
     public quantity?: number | null,
     public createdAt?: dayjs.Dayjs | null,
     public updatedAt?: dayjs.Dayjs | null,
-    public product?: IProduct | null,
+    public prod?: IProduct | null,
     public cart?: ICart | null
   ) {}
 }

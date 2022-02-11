@@ -37,14 +37,14 @@ class ProductResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_PRICE = 1;
-    private static final Integer UPDATED_PRICE = 2;
+    private static final Float DEFAULT_PRICE = 1.0f;
+    private static final Float UPDATED_PRICE = 2.0f;
 
     private static final Integer DEFAULT_QUANTITY = 1;
     private static final Integer UPDATED_QUANTITY = 2;
 
-    private static final Integer DEFAULT_DISCOUNT_PERCENT = 1;
-    private static final Integer UPDATED_DISCOUNT_PERCENT = 2;
+    private static final Float DEFAULT_DISCOUNT_PERCENT = 1.0f;
+    private static final Float UPDATED_DISCOUNT_PERCENT = 2.0f;
 
     private static final ProductStatus DEFAULT_STATUS = ProductStatus.DRAFT;
     private static final ProductStatus UPDATED_STATUS = ProductStatus.PUBLISHED;
@@ -133,7 +133,7 @@ class ProductResourceIT {
         assertThat(testProduct.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testProduct.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testProduct.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
-        assertThat(testProduct.getDiscountPercent()).isEqualTo(DEFAULT_DISCOUNT_PERCENT);
+        assertThat(testProduct.getDiscountPrice()).isEqualTo(DEFAULT_DISCOUNT_PERCENT);
         assertThat(testProduct.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testProduct.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
         assertThat(testProduct.getUpdatedAt()).isEqualTo(DEFAULT_UPDATED_AT);
@@ -244,7 +244,7 @@ class ProductResourceIT {
         assertThat(testProduct.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testProduct.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testProduct.getQuantity()).isEqualTo(UPDATED_QUANTITY);
-        assertThat(testProduct.getDiscountPercent()).isEqualTo(UPDATED_DISCOUNT_PERCENT);
+        assertThat(testProduct.getDiscountPrice()).isEqualTo(UPDATED_DISCOUNT_PERCENT);
         assertThat(testProduct.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testProduct.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testProduct.getUpdatedAt()).isEqualTo(UPDATED_UPDATED_AT);
@@ -344,7 +344,7 @@ class ProductResourceIT {
         assertThat(testProduct.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testProduct.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testProduct.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
-        assertThat(testProduct.getDiscountPercent()).isEqualTo(DEFAULT_DISCOUNT_PERCENT);
+        assertThat(testProduct.getDiscountPrice()).isEqualTo(DEFAULT_DISCOUNT_PERCENT);
         assertThat(testProduct.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testProduct.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testProduct.getUpdatedAt()).isEqualTo(DEFAULT_UPDATED_AT);
@@ -386,7 +386,7 @@ class ProductResourceIT {
         assertThat(testProduct.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testProduct.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testProduct.getQuantity()).isEqualTo(UPDATED_QUANTITY);
-        assertThat(testProduct.getDiscountPercent()).isEqualTo(UPDATED_DISCOUNT_PERCENT);
+        assertThat(testProduct.getDiscountPrice()).isEqualTo(UPDATED_DISCOUNT_PERCENT);
         assertThat(testProduct.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testProduct.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testProduct.getUpdatedAt()).isEqualTo(UPDATED_UPDATED_AT);

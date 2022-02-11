@@ -23,11 +23,15 @@ public class OrderItem implements Serializable {
     @Column(name = "id")
     private Long id;
 
+
     @Column(name = "price")
-    private Integer price;
+    private Float price;
 
     @Column(name = "quantity")
     private Integer quantity;
+
+    @Column(name = "discount_price")
+    private Float discountPrice;
 
     @Column(name = "created_at")
     private Instant createdAt;
@@ -54,20 +58,28 @@ public class OrderItem implements Serializable {
         return this;
     }
 
+    public Float getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(Float discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getPrice() {
+    public Float getPrice() {
         return this.price;
     }
 
-    public OrderItem price(Integer price) {
+    public OrderItem price(Float price) {
         this.setPrice(price);
         return this;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

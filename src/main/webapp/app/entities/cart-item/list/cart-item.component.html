@@ -52,8 +52,8 @@
           <td>{{ cartItem.createdAt | formatMediumDatetime }}</td>
           <td>{{ cartItem.updatedAt | formatMediumDatetime }}</td>
           <td>
-            <div *ngIf="cartItem.product">
-              <a [routerLink]="['/product', cartItem.product?.id, 'view']">{{ cartItem.product?.id }}</a>
+            <div *ngIf="cartItem.prod">
+              <a [routerLink]="['/product', cartItem.prod?.id, 'view']">{{ cartItem.prod?.id }}</a>
             </div>
           </td>
           <td>

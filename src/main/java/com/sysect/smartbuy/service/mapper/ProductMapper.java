@@ -15,5 +15,9 @@ public interface ProductMapper extends EntityMapper<ProductDTO, Product> {
     @Named("id")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "price", source = "price")
+    @Mapping(target = "discountPrice", source = "discountPrice")
+
     ProductDTO toDtoId(Product product);
 }

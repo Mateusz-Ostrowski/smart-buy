@@ -11,9 +11,11 @@ public class OrderItemDTO implements Serializable {
 
     private Long id;
 
-    private Integer price;
+    private Float price;
 
     private Integer quantity;
+
+    private Float discount;
 
     private Instant createdAt;
 
@@ -31,11 +33,11 @@ public class OrderItemDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -77,6 +79,14 @@ public class OrderItemDTO implements Serializable {
 
     public void setOrder(OrderDTO order) {
         this.order = order;
+    }
+
+    public Float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Float discount) {
+        this.discount = discount;
     }
 
     @Override

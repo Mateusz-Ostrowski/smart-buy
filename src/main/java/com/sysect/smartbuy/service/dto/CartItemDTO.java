@@ -11,15 +11,17 @@ public class CartItemDTO implements Serializable {
 
     private Long id;
 
-    private Integer price;
+    private Float price;
 
     private Integer quantity;
+
+    private Float discount;
 
     private Instant createdAt;
 
     private Instant updatedAt;
 
-    private ProductDTO product;
+    private ProductDTO prod;
 
     private CartDTO cart;
 
@@ -31,11 +33,11 @@ public class CartItemDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -63,12 +65,12 @@ public class CartItemDTO implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public ProductDTO getProduct() {
-        return product;
+    public ProductDTO getProd() {
+        return prod;
     }
 
-    public void setProduct(ProductDTO product) {
-        this.product = product;
+    public void setProd(ProductDTO prod) {
+        this.prod = prod;
     }
 
     public CartDTO getCart() {
@@ -77,6 +79,14 @@ public class CartItemDTO implements Serializable {
 
     public void setCart(CartDTO cart) {
         this.cart = cart;
+    }
+
+    public Float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Float discount) {
+        this.discount = discount;
     }
 
     @Override
@@ -109,7 +119,7 @@ public class CartItemDTO implements Serializable {
             ", quantity=" + getQuantity() +
             ", createdAt='" + getCreatedAt() + "'" +
             ", updatedAt='" + getUpdatedAt() + "'" +
-            ", product=" + getProduct() +
+            ", product=" + getProd() +
             ", cart=" + getCart() +
             "}";
     }

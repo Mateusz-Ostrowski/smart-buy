@@ -53,7 +53,7 @@ describe('CartItem Management Update Component', () => {
     it('Should call Product query and add missing value', () => {
       const cartItem: ICartItem = { id: 456 };
       const product: IProduct = { id: 27244 };
-      cartItem.product = product;
+      cartItem.prod = product;
 
       const productCollection: IProduct[] = [{ id: 35740 }];
       jest.spyOn(productService, 'query').mockReturnValue(of(new HttpResponse({ body: productCollection })));
@@ -91,7 +91,7 @@ describe('CartItem Management Update Component', () => {
     it('Should update editForm', () => {
       const cartItem: ICartItem = { id: 456 };
       const product: IProduct = { id: 82304 };
-      cartItem.product = product;
+      cartItem.prod = product;
       const cart: ICart = { id: 55864 };
       cartItem.cart = cart;
 

@@ -17,13 +17,13 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="price" type="integer">
+            <column name="price" type="float">
                 <constraints nullable="true" />
             </column>
             <column name="quantity" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="discount_percent" type="integer">
+            <column name="discount_price" type="float">
                 <constraints nullable="true" />
             </column>
             <column name="status" type="varchar(255)">

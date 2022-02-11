@@ -105,11 +105,11 @@ export class CartItemUpdateComponent implements OnInit {
       quantity: cartItem.quantity,
       createdAt: cartItem.createdAt ? cartItem.createdAt.format(DATE_TIME_FORMAT) : null,
       updatedAt: cartItem.updatedAt ? cartItem.updatedAt.format(DATE_TIME_FORMAT) : null,
-      product: cartItem.product,
+      product: cartItem.prod,
       cart: cartItem.cart,
     });
 
-    this.productsSharedCollection = this.productService.addProductToCollectionIfMissing(this.productsSharedCollection, cartItem.product);
+    this.productsSharedCollection = this.productService.addProductToCollectionIfMissing(this.productsSharedCollection, cartItem.prod);
     this.cartsSharedCollection = this.cartService.addCartToCollectionIfMissing(this.cartsSharedCollection, cartItem.cart);
   }
 
@@ -137,7 +137,7 @@ export class CartItemUpdateComponent implements OnInit {
       quantity: this.editForm.get(['quantity'])!.value,
       createdAt: this.editForm.get(['createdAt'])!.value ? dayjs(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
       updatedAt: this.editForm.get(['updatedAt'])!.value ? dayjs(this.editForm.get(['updatedAt'])!.value, DATE_TIME_FORMAT) : undefined,
-      product: this.editForm.get(['product'])!.value,
+      prod: this.editForm.get(['product'])!.value,
       cart: this.editForm.get(['cart'])!.value,
     };
   }

@@ -32,8 +32,8 @@
         </dd>
         <dt><span>Product</span></dt>
         <dd>
-          <div *ngIf="cartItem.product">
-            <a [routerLink]="['/product', cartItem.product?.id, 'view']">{{ cartItem.product?.id }}</a>
+          <div *ngIf="cartItem.prod">
+            <a [routerLink]="['/product', cartItem.prod?.id, 'view']">{{ cartItem.prod?.id }}</a>
           </div>
         </dd>
         <dt><span>Cart</span></dt>

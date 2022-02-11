@@ -14,11 +14,11 @@ public class ProductDTO implements Serializable {
 
     private String name;
 
-    private Integer price;
+    private Float price;
 
     private Integer quantity;
 
-    private Integer discountPercent;
+    private Float discountPrice;
 
     private ProductStatus status;
 
@@ -44,11 +44,11 @@ public class ProductDTO implements Serializable {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -60,12 +60,12 @@ public class ProductDTO implements Serializable {
         this.quantity = quantity;
     }
 
-    public Integer getDiscountPercent() {
-        return discountPercent;
+    public Float getDiscountPrice() {
+        return discountPrice;
     }
 
-    public void setDiscountPercent(Integer discountPercent) {
-        this.discountPercent = discountPercent;
+    public void setDiscountPrice(Float discountPrice) {
+        this.discountPrice = discountPrice;
     }
 
     public ProductStatus getStatus() {
@@ -129,7 +129,7 @@ public class ProductDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", price=" + getPrice() +
             ", quantity=" + getQuantity() +
-            ", discountPercent=" + getDiscountPercent() +
+            ", discountPercent=" + getDiscountPrice() +
             ", status='" + getStatus() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             ", updatedAt='" + getUpdatedAt() + "'" +

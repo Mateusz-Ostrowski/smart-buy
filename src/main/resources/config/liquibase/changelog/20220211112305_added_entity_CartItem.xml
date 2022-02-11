@@ -14,7 +14,10 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="price" type="integer">
+            <column name="price" type="float">
+                <constraints nullable="true" />
+            </column>
+            <column name="discount_price" type="float">
                 <constraints nullable="true" />
             </column>
             <column name="quantity" type="integer">

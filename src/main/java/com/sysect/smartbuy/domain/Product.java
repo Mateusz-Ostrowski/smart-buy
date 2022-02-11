@@ -30,13 +30,13 @@ public class Product implements Serializable {
     private String name;
 
     @Column(name = "price")
-    private Integer price;
+    private Float price;
 
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "discount_percent")
-    private Integer discountPercent;
+    @Column(name = "discount_price")
+    private Float discountPrice;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -90,16 +90,16 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public Float getPrice() {
         return this.price;
     }
 
-    public Product price(Integer price) {
+    public Product price(Float price) {
         this.setPrice(price);
         return this;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -116,17 +116,17 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
-    public Integer getDiscountPercent() {
-        return this.discountPercent;
+    public Float getDiscountPrice() {
+        return this.discountPrice;
     }
 
-    public Product discountPercent(Integer discountPercent) {
-        this.setDiscountPercent(discountPercent);
+    public Product discountPercent(Float discountPercent) {
+        this.setDiscountPrice(discountPercent);
         return this;
     }
 
-    public void setDiscountPercent(Integer discountPercent) {
-        this.discountPercent = discountPercent;
+    public void setDiscountPrice(Float discountPercent) {
+        this.discountPrice = discountPercent;
     }
 
     public ProductStatus getStatus() {
@@ -270,7 +270,7 @@ public class Product implements Serializable {
             ", name='" + getName() + "'" +
             ", price=" + getPrice() +
             ", quantity=" + getQuantity() +
-            ", discountPercent=" + getDiscountPercent() +
+            ", discountPercent=" + getDiscountPrice() +
             ", status='" + getStatus() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             ", updatedAt='" + getUpdatedAt() + "'" +

@@ -205,7 +205,6 @@ public class CartResource {
 
     @PostMapping("/cart")
     public ResponseEntity<Void> addItemToCart(@RequestBody AddItemToCartVM addItemToCartVM){
-        System.out.println("TEST");
         cartService.addItemToCart(addItemToCartVM);
         return ResponseEntity.ok().build();
     }

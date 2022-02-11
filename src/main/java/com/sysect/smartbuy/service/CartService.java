@@ -8,6 +8,7 @@ import com.sysect.smartbuy.service.dto.CartItemDTO;
 import com.sysect.smartbuy.web.rest.vm.AddItemToCartVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service Interface for managing {@link com.sysect.smartbuy.domain.Cart}.
@@ -58,5 +59,6 @@ public interface CartService {
      */
     void delete(Long id);
 
+    @Transactional
     void addItemToCart(AddItemToCartVM addItemToCartVM);
 }

@@ -80,8 +80,10 @@ public class CartItemServiceImpl implements CartItemService {
         cartItemRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public List<CartItemDTO> findAllCartItemsOfCurrentUser() {
+        System.out.println(cartItemRepository.getAllByLogin(SecurityUtils.getCurrentUserLogin().get()));
         return cartItemRepository.getAllByLogin(SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new SecurityException("No user logged in!")))
             .stream().map(cartItemMapper::toDto).collect(Collectors.toList());
     }

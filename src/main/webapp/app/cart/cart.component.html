@@ -1,17 +1,21 @@
 <div class="cart">
  <div class="cart-item-column">
-   <hr>
 
-    <div class="cart-item">
-      <div class="cart-item-image-wrapper">
-        <img class="cart-item-image" alt="Produkt">
-      </div>
-      <div class="cart-item-text">
-        Text
-      </div>
-    </div>
+   <div *ngFor="let item of cartItems" >
+     <hr>
+      <div class="cart-item" *ngIf="item.prod" >
+        <div class="cart-item-image-wrapper">
+          <img class="cart-item-image" alt="{{item.prod.name}}">
+        </div>
+        <div class="cart-item-text">
+          <h3>{{item.prod.name}}</h3>
+          <h4>Price per one: {{item.price}}</h4>
+          <h5>Quantity: {{item.quantity}}</h5>
 
-   <hr>
+        </div>
+      </div>
+     <hr>
+   </div>
 
   </div>
   <div class="cart-summary-column">

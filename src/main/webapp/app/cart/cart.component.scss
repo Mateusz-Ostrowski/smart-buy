@@ -11,10 +11,10 @@ Main page styles
 }
 
 .cart-item-column {
-  height:80vh;
-  width:70vw;
+  width: calc(100% - 250px);
   overflow-y: scroll;
   float:left;
+  height:80vh;
 }
 
 .cart-item-image-wrapper{
@@ -41,7 +41,8 @@ Main page styles
   display:inline-block;
 }
 .cart-summary-column{
-  float:left;
+  width:250px;
+  float:right;
   align-items: center;
   justify-content: center;
   justify-items: center;

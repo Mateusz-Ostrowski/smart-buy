@@ -3,6 +3,7 @@ package com.sysect.smartbuy.service.impl;
 import com.sysect.smartbuy.domain.Cart;
 import com.sysect.smartbuy.domain.CartItem;
 import com.sysect.smartbuy.domain.Product;
+import com.sysect.smartbuy.repository.CartItemRepository;
 import com.sysect.smartbuy.repository.CartRepository;
 import com.sysect.smartbuy.repository.ProductRepository;
 import com.sysect.smartbuy.repository.UserRepository;
@@ -41,14 +42,14 @@ public class CartServiceImpl implements CartService {
 
     private final CartMapper cartMapper;
 
-    private final UserRepository userRepository;
+    private final CartItemRepository cartItemRepository;
 
     private final ProductRepository productRepository;
 
-    public CartServiceImpl(CartRepository cartRepository, CartMapper cartMapper, UserRepository userRepository, ProductRepository productRepository) {
+    public CartServiceImpl(CartRepository cartRepository, CartMapper cartMapper, CartItemRepository cartItemRepository, ProductRepository productRepository) {
         this.cartRepository = cartRepository;
         this.cartMapper = cartMapper;
-        this.userRepository = userRepository;
+        this.cartItemRepository = cartItemRepository;
         this.productRepository = productRepository;
     }
 
@@ -123,17 +124,28 @@ public class CartServiceImpl implements CartService {
             throw new IllegalArgumentException("Quantity cannot be higher than product quantity");
         }
 
-        CartItem cartItem = new CartItem();
-        cartItem.setProduct(product);
-        cartItem.setPrice(product.getPrice());
-        cartItem.setQuantity(product.getQuantity());
+        Optional<CartItem> cartItemOptional = cartItemRepository.getOneByCartAndProduct(cart,product);
+        CartItem cartItem;
 
-        cartItem.setCreatedAt(Instant.now());
-        cartItem.setUpdatedAt(Instant.now());
+        if(cartItemOptional.isEmpty()) {
+            cartItem = new CartItem();
+            cartItem.setProduct(product);
+            cartItem.setPrice(product.getPrice());
+            cartItem.setQuantity(addItemToCartVM.getQuantity());
 
-        cart.addItems(cartItem);
+            cartItem.setCreatedAt(Instant.now());
+            cartItem.setUpdatedAt(Instant.now());
 
-        cartRepository.saveAndFlush(cart);
+            cartItem.setCart(cart);
+        }else{
+            cartItem = cartItemOptional.get();
+            cartItem.setQuantity(cartItem.getQuantity() + addItemToCartVM.getQuantity());
+            if(cartItem.getQuantity() > product.getQuantity()){
+                throw new IllegalArgumentException("Quantity cannot be higher than product quantity");
+            }
+        }
+
+        cartItemRepository.saveAndFlush(cartItem);
     }
 
 

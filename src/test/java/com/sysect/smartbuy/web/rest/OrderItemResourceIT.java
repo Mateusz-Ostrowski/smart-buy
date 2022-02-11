@@ -33,8 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class OrderItemResourceIT {
 
-    private static final Integer DEFAULT_PRICE = 1;
-    private static final Integer UPDATED_PRICE = 2;
+    private static final Float DEFAULT_PRICE = 1.0f;
+    private static final Float UPDATED_PRICE = 2.0f;
 
     private static final Integer DEFAULT_QUANTITY = 1;
     private static final Integer UPDATED_QUANTITY = 2;
