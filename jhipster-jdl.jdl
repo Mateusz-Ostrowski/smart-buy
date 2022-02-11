@@ -1,0 +1,105 @@
+entity Customer {
+	firstName String,
+    lastName String
+}
+
+entity Product {
+	 name String,
+     price Integer,
+     quantity Integer,
+     discountPercent Integer,
+     status ProductStatus,
+     createdAt Instant,
+     updatedAt Instant
+}
+
+entity FileInfo {
+	fileName String,
+	originalFileName String,
+    fileSize Integer,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Category{
+     name String,
+     order Integer
+}
+
+entity ProductReview{
+	text String,
+    rating Integer,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Address {
+	city String,
+    postalCode String,
+	street String,
+    buildingNo String,
+    doorNo String
+}
+
+entity Cart{
+
+}
+
+entity CartItem{
+    price Integer,
+    quantity Integer,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+entity Order{
+	uuid UUID,
+	firstName String,
+    lastName String,
+    city String,
+    postalCode String,
+	street String,
+    buildingNo String,
+    doorNo String
+	description String
+}
+
+entity OrderItem{
+    price Integer,
+    quantity Integer,
+    createdAt Instant,
+    updatedAt Instant
+}
+
+relationship OneToOne {
+	Customer{shoppingCart} to Cart{customer}
+
+}
+relationship ManyToOne {
+	FileInfo{imageOf} to Product{images}
+	Product{category} to Category{products}
+	Order{customer} to Customer{order}
+    OrderItem{product} to Product
+    OrderItem{order} to Order{products}
+	CartItem{product} to Product
+	CartItem{cart} to Cart{items}
+	ProductReview{product} to Product{reviews}
+    ProductReview{customer} to Customer{reviews}
+	Category{parentCategory} to Category{subcategories}
+    Address{customer} to Customer{addresses}
+}
+
+enum ProductStatus{
+	DRAFT, PUBLISHED
+}
+// Set pagination options
+paginate Product with infinite-scroll
+paginate Product with pagination
+
+// Use Data Transfer Objects (DTO)
+
+// Set service options to all except few
+use mapstruct, serviceImpl, pagination for *
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

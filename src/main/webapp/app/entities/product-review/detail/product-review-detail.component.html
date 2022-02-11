@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="productReview">
+      <h2 data-cy="productReviewDetailsHeading"><span>Product Review</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ productReview.id }}</span>
+        </dd>
+        <dt><span>Text</span></dt>
+        <dd>
+          <span>{{ productReview.text }}</span>
+        </dd>
+        <dt><span>Rating</span></dt>
+        <dd>
+          <span>{{ productReview.rating }}</span>
+        </dd>
+        <dt><span>Created At</span></dt>
+        <dd>
+          <span>{{ productReview.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Updated At</span></dt>
+        <dd>
+          <span>{{ productReview.updatedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Product</span></dt>
+        <dd>
+          <div *ngIf="productReview.product">
+            <a [routerLink]="['/product', productReview.product?.id, 'view']">{{ productReview.product?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Customer</span></dt>
+        <dd>
+          <div *ngIf="productReview.customer">
+            <a [routerLink]="['/customer', productReview.customer?.id, 'view']">{{ productReview.customer?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/product-review', productReview.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

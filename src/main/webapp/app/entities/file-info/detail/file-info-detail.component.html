@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="fileInfo">
+      <h2 data-cy="fileInfoDetailsHeading"><span>File Info</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ fileInfo.id }}</span>
+        </dd>
+        <dt><span>File Name</span></dt>
+        <dd>
+          <span>{{ fileInfo.fileName }}</span>
+        </dd>
+        <dt><span>Original File Name</span></dt>
+        <dd>
+          <span>{{ fileInfo.originalFileName }}</span>
+        </dd>
+        <dt><span>File Size</span></dt>
+        <dd>
+          <span>{{ fileInfo.fileSize }}</span>
+        </dd>
+        <dt><span>Created At</span></dt>
+        <dd>
+          <span>{{ fileInfo.createdAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Updated At</span></dt>
+        <dd>
+          <span>{{ fileInfo.updatedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Image Of</span></dt>
+        <dd>
+          <div *ngIf="fileInfo.imageOf">
+            <a [routerLink]="['/product', fileInfo.imageOf?.id, 'view']">{{ fileInfo.imageOf?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/file-info', fileInfo.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

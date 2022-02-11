@@ -1,0 +1,114 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductReviewHeading">
+    <span>Product Reviews</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-product-review"
+        [routerLink]="['/product-review/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Product Review </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="productReviews?.length === 0">
+    <span>No productReviews found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="productReviews && productReviews.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="text"><span>Text</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="rating"><span>Rating</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="createdAt"><span>Created At</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="updatedAt"><span>Updated At</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="product.id"><span>Product</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="customer.id"><span>Customer</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let productReview of productReviews; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/product-review', productReview.id, 'view']">{{ productReview.id }}</a>
+          </td>
+          <td>{{ productReview.text }}</td>
+          <td>{{ productReview.rating }}</td>
+          <td>{{ productReview.createdAt | formatMediumDatetime }}</td>
+          <td>{{ productReview.updatedAt | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="productReview.product">
+              <a [routerLink]="['/product', productReview.product?.id, 'view']">{{ productReview.product?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="productReview.customer">
+              <a [routerLink]="['/customer', productReview.customer?.id, 'view']">{{ productReview.customer?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/product-review', productReview.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/product-review', productReview.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(productReview)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="productReviews && productReviews.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>
