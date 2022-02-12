@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { observable, Observable } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ICart, getCartIdentifier } from '../cart.model';
-import {AddItemToCartModel, IAddItemToCartModel} from "../add-item-to-cart.model";
-import {ICartItem} from "../../cart-item/cart-item.model";
+import { AddItemToCartModel, IAddItemToCartModel } from '../add-item-to-cart.model';
+import { ICartItem } from '../../cart-item/cart-item.model';
 
 export type EntityResponseType = HttpResponse<ICart>;
 export type EntityArrayResponseType = HttpResponse<ICart[]>;
@@ -60,9 +60,15 @@ export class CartService {
     }
     return cartCollection;
   }
-  addItemToCart(productId: number | undefined, quantity: number): void{
-
-    this.http.post<IAddItemToCartModel>(this.cartUrl, new AddItemToCartModel(productId,quantity)).subscribe();
+  addItemToCart(productId: number | undefined, quantity: number): void {
+    this.http.post<IAddItemToCartModel>(this.cartUrl, new AddItemToCartModel(productId, quantity)).subscribe(
+      value => {
+        alert('Item successfully added to cart!');
+      },
+      error => {
+        alert('Cannot add more items to cart than there are in stock');
+      }
+    );
     //return this.http.post<ICartItem>(this.resourceUrl,new AddItemToCartModel(productId,quantity), { observe: 'response' }).pipe();
   }
 

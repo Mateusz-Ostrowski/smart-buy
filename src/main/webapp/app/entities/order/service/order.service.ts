@@ -13,6 +13,7 @@ export type EntityArrayResponseType = HttpResponse<IOrder[]>;
 @Injectable({ providedIn: 'root' })
 export class OrderService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/orders');
+  protected placeOrderUrl = this.applicationConfigService.getEndpointFor('api/order/place');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -56,5 +57,16 @@ export class OrderService {
       return [...ordersToAdd, ...orderCollection];
     }
     return orderCollection;
+  }
+
+  placeOrder(): void {
+    this.http.post(`${this.placeOrderUrl}`, {}).subscribe(
+      () => {
+        alert('Order placed successfully!');
+      },
+      error => {
+        alert('Couldnt place the order!');
+      }
+    );
   }
 }

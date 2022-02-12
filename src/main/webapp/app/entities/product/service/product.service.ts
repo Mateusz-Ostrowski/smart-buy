@@ -53,10 +53,21 @@ export class ProductService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  getPublicProducts(categoryId: string | null,req?: any): Observable<EntityArrayResponseType> {
+  getPublicProducts(
+    categoryId: string | null,
+    priceRangeMin: number | null,
+    priceRangeMax: number | null,
+    req?: any
+  ): Observable<EntityArrayResponseType> {
     let options = createRequestOption(req);
-    if(typeof categoryId === 'string') {
-      options = options.append("categoryId", categoryId);
+    if (typeof categoryId === 'string') {
+      options = options.append('categoryId', categoryId);
+    }
+    if (typeof priceRangeMin === 'number') {
+      options = options.append('minPrice', priceRangeMin);
+    }
+    if (typeof priceRangeMax === 'number') {
+      options = options.append('maxPrice', priceRangeMax);
     }
     return this.http
       .get<IProduct[]>(this.publicUrl, { params: options, observe: 'response' })

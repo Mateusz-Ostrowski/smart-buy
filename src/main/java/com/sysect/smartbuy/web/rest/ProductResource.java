@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -180,17 +181,23 @@ public class ProductResource {
     }
 
     @GetMapping("/public/products")
-    public ResponseEntity<List<ProductDTO>> getAllPublishedProductsByCategory(@RequestParam(required = false) Long categoryId, @org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<ProductDTO>> getAllPublishedProductsByCategory(
+        @RequestParam(required = false) Long categoryId,
+        @RequestParam(required = false) Float minPrice,
+        @RequestParam(required = false) Float maxPrice,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
         log.debug("REST request to get a page of Products");
         Page<ProductDTO> page = productService.findAllByCategoryIdAndStatusPublished(categoryId, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
 
-    @GetMapping("/public/products/{id}")
-    public ResponseEntity<ProductDTO> getPublicProduct(@PathVariable Long id) {
-        log.debug("REST request to get Product : {}", id);
-        Optional<ProductDTO> productDTO = productService.findOneByIdAndStatusPublished(id);
-        return ResponseUtil.wrapOrNotFound(productDTO);
+        List<ProductDTO> productDTOS = page
+            .getContent()
+            .stream()
+            .filter(productDTO -> minPrice == null || (productDTO.getPrice() >= minPrice))
+            .filter(productDTO -> maxPrice == null || (productDTO.getPrice() <= maxPrice))
+            .collect(Collectors.toList());
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(productDTOS);
     }
 }

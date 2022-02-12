@@ -19,7 +19,7 @@
 <div class="gallery-app-container">
   <ul class="filter-menu">
     <li>
-      <span class="category-header">Kategorie</span>
+      <span class="category-header">Categories</span>
       <div aria-hidden="false" class="rah-static rah-static--height-auto" style="height: auto; overflow: visible">
         <div>
           <ul class="category-list">
@@ -36,9 +36,9 @@
       </div>
     </li>
     <li data-hook="filter-type-PRICE ">
-      <span class="category-header">Cena</span>
+      <span class="category-header">Price Filter</span>
       <div class="custom-slider">
-        <ngx-slider [(value)]="value" [(highValue)]="highValue" [options]="options"></ngx-slider>
+        <ngx-slider [(value)]="value" [(highValue)]="highValue" [options]="options" (mouseup)="sliderEvent()"></ngx-slider>
       </div>
     </li>
   </ul>

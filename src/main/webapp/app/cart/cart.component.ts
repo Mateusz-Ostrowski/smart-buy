@@ -10,6 +10,7 @@ import { CartService } from '../entities/cart/service/cart.service';
 import { HttpResponse } from '@angular/common/http';
 import { ICategory } from '../entities/category/category.model';
 import { FileInfoService } from '../entities/file-info/service/file-info.service';
+import { OrderService } from '../entities/order/service/order.service';
 
 @Component({
   selector: 'jhi-cart',
@@ -26,7 +27,8 @@ export class CartComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private router: Router,
     private cartService: CartService,
-    public fileInfoService: FileInfoService
+    public fileInfoService: FileInfoService,
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
@@ -62,5 +64,10 @@ export class CartComponent implements OnInit, OnDestroy {
       }
     });
     return sum;
+  }
+
+  placeOrder(): void {
+    this.orderService.placeOrder();
+    this.router.navigateByUrl('/');
   }
 }

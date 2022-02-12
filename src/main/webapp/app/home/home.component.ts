@@ -27,12 +27,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   highValue: number;
   options: Options = {
     floor: 0,
-    ceil: 100,
+    ceil: 500,
     translate: (value: number): string => {
       if (value === this.options.ceil) {
-        return 'powyżej ' + value.toString() + ' zł';
+        return 'more than ' + value.toString() + '$';
       }
-      return value.toString() + ' zł';
+      return value.toString() + ' $';
     },
   };
 
@@ -47,8 +47,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute
   ) {
     this.value = 0;
-    this.highValue = 100;
+    this.highValue = 500;
   }
+
+  sliderEvent(): void {
+    this.productService
+      .getPublicProducts(
+        this.activatedRoute.snapshot.paramMap.get('id'),
+        this.value,
+        this.highValue === this.options.ceil ? null : this.highValue
+      )
+      .subscribe({
+        next: (res: HttpResponse<ICategory[]>) => {
+          this.products = res.body ?? [];
+        },
+      });
+  }
+
   ngOnInit(): void {
     this.accountService
       .getAuthenticationState()
@@ -60,7 +75,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       },
     });
     this.activatedRoute.params.subscribe(() => {
-      this.productService.getPublicProducts(this.activatedRoute.snapshot.paramMap.get('id')).subscribe({
+      this.productService.getPublicProducts(this.activatedRoute.snapshot.paramMap.get('id'), this.value, this.highValue).subscribe({
         next: (res: HttpResponse<ICategory[]>) => {
           this.products = res.body ?? [];
         },

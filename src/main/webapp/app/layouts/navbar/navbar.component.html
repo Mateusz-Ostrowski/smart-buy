@@ -280,12 +280,13 @@
           </li>
         </ul>
       </li>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="/shopping-cart" (click)="collapseNavbar()">
+          <span>
+            <span>Cart</span>
+          </span>
+        </a>
+      </li>
     </ul>
-    <a class="nav-link" routerLink="/shopping-cart" (click)="collapseNavbar()">
-      <span>
-        <!--            <fa-icon icon="cart"></fa-icon>-->
-        <span>Cart</span>
-      </span>
-    </a>
   </div>
 </nav>

@@ -178,4 +178,10 @@ public class OrderResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @PostMapping("/order/place")
+    public ResponseEntity<Void> placeOrder() {
+        orderService.placeOrder();
+        return ResponseEntity.ok().build();
+    }
 }
