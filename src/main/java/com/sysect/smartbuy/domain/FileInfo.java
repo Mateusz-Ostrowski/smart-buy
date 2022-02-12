@@ -30,7 +30,7 @@ public class FileInfo implements Serializable {
     private String originalFileName;
 
     @Column(name = "file_size")
-    private Integer fileSize;
+    private Long fileSize;
 
     @Column(name = "created_at")
     private Instant createdAt;
@@ -38,11 +38,22 @@ public class FileInfo implements Serializable {
     @Column(name = "updated_at")
     private Instant updatedAt;
 
+    @Column(name = "remove_flag")
+    private Boolean removeFlag = false;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "category", "images", "reviews" }, allowSetters = true)
     private Product imageOf;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Boolean getRemoveFlag() {
+        return removeFlag;
+    }
+
+    public void setRemoveFlag(Boolean removeFlag) {
+        this.removeFlag = removeFlag;
+    }
 
     public Long getId() {
         return this.id;
@@ -83,16 +94,16 @@ public class FileInfo implements Serializable {
         this.originalFileName = originalFileName;
     }
 
-    public Integer getFileSize() {
+    public Long getFileSize() {
         return this.fileSize;
     }
 
-    public FileInfo fileSize(Integer fileSize) {
+    public FileInfo fileSize(Long fileSize) {
         this.setFileSize(fileSize);
         return this;
     }
 
-    public void setFileSize(Integer fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 

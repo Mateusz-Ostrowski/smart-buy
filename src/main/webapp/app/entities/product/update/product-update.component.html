@@ -90,6 +90,36 @@
         </div>
       </div>
 
+      <div class="center">
+        <ngx-file-drop
+          dropZoneLabel="Drop files here"
+          (onFileDrop)="dropped($event)"
+          (onFileOver)="fileOver($event)"
+          (onFileLeave)="fileLeave($event)"
+        >
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            {{ fileDropMessage }}
+            <button *ngIf="!filesDuringDrop" type="button" (click)="openFileSelector()">Browse Files</button>
+          </ng-template>
+        </ngx-file-drop>
+        <div class="upload-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody class="upload-name-style">
+              <tr *ngFor="let item of draggedFiles; let i = index">
+                <td class="file-name">
+                  <strong (click)="removeFileFromUploads(i)">{{ item.relativePath }} (click to remove)</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>

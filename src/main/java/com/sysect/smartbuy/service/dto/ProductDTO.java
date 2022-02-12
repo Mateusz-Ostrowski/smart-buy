@@ -1,8 +1,11 @@
 package com.sysect.smartbuy.service.dto;
 
+import com.sysect.smartbuy.domain.FileInfo;
 import com.sysect.smartbuy.domain.enumeration.ProductStatus;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,6 +30,26 @@ public class ProductDTO implements Serializable {
     private Instant updatedAt;
 
     private CategoryDTO category;
+
+    private List<FileInfoDTO> images = new ArrayList<>();
+
+    private List<Long> fileIds = new ArrayList<>();
+
+    public List<Long> getFileIds() {
+        return fileIds;
+    }
+
+    public void setFileIds(List<Long> fileIds) {
+        this.fileIds = fileIds;
+    }
+
+    public List<FileInfoDTO> getImages() {
+        return images;
+    }
+
+    public void setImages(List<FileInfoDTO> images) {
+        this.images = images;
+    }
 
     public Long getId() {
         return id;

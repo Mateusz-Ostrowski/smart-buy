@@ -39,8 +39,8 @@ class FileInfoResourceIT {
     private static final String DEFAULT_ORIGINAL_FILE_NAME = "AAAAAAAAAA";
     private static final String UPDATED_ORIGINAL_FILE_NAME = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_FILE_SIZE = 1;
-    private static final Integer UPDATED_FILE_SIZE = 2;
+    private static final Long DEFAULT_FILE_SIZE = 1L;
+    private static final Long UPDATED_FILE_SIZE = 2L;
 
     private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);

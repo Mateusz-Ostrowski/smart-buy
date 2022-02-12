@@ -15,7 +15,7 @@ public class CartItemDTO implements Serializable {
 
     private Integer quantity;
 
-    private Float discount;
+    private Float discountPrice;
 
     private Instant createdAt;
 
@@ -81,12 +81,12 @@ public class CartItemDTO implements Serializable {
         this.cart = cart;
     }
 
-    public Float getDiscount() {
-        return discount;
+    public Float getDiscountPrice() {
+        return discountPrice;
     }
 
-    public void setDiscount(Float discount) {
-        this.discount = discount;
+    public void setDiscountPrice(Float discountPrice) {
+        this.discountPrice = discountPrice;
     }
 
     @Override

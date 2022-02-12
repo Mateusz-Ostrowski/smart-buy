@@ -11,23 +11,20 @@ import com.sysect.smartbuy.security.SecurityUtils;
 import com.sysect.smartbuy.service.CartService;
 import com.sysect.smartbuy.service.dto.CartDTO;
 import com.sysect.smartbuy.service.mapper.CartMapper;
-
+import com.sysect.smartbuy.web.rest.vm.AddItemToCartVM;
 import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-import com.sysect.smartbuy.web.rest.vm.AddItemToCartVM;
+import javax.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityNotFoundException;
 
 /**
  * Service Implementation for managing {@link Cart}.
@@ -46,7 +43,12 @@ public class CartServiceImpl implements CartService {
 
     private final ProductRepository productRepository;
 
-    public CartServiceImpl(CartRepository cartRepository, CartMapper cartMapper, CartItemRepository cartItemRepository, ProductRepository productRepository) {
+    public CartServiceImpl(
+        CartRepository cartRepository,
+        CartMapper cartMapper,
+        CartItemRepository cartItemRepository,
+        ProductRepository productRepository
+    ) {
         this.cartRepository = cartRepository;
         this.cartMapper = cartMapper;
         this.cartItemRepository = cartItemRepository;
@@ -112,41 +114,43 @@ public class CartServiceImpl implements CartService {
 
     @Transactional
     @Override
-    public void addItemToCart(AddItemToCartVM addItemToCartVM){
-        Product product = productRepository.findById(addItemToCartVM.getProductId())
-            .orElseThrow(() -> new EntityNotFoundException("Product with "+addItemToCartVM.getProductId()+" not found!"));
+    public void addItemToCart(AddItemToCartVM addItemToCartVM) {
+        Product product = productRepository
+            .findById(addItemToCartVM.getProductId())
+            .orElseThrow(() -> new EntityNotFoundException("Product with " + addItemToCartVM.getProductId() + " not found!"));
 
-        Cart cart = cartRepository.findCartByCustomer_User_Login(SecurityUtils.getCurrentUserLogin()
-            .orElseThrow(() -> new SecurityException("User with given login not found!")))
+        Cart cart = cartRepository
+            .findCartByCustomer_User_Login(
+                SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new SecurityException("User with given login not found!"))
+            )
             .orElseThrow(() -> new EntityNotFoundException("Cart with given user not found!"));
 
-        if(addItemToCartVM.getQuantity() > product.getQuantity()){
+        if (addItemToCartVM.getQuantity() > product.getQuantity()) {
             throw new IllegalArgumentException("Quantity cannot be higher than product quantity");
         }
 
-        Optional<CartItem> cartItemOptional = cartItemRepository.getOneByCartAndProduct(cart,product);
+        Optional<CartItem> cartItemOptional = cartItemRepository.getOneByCartAndProduct(cart, product);
         CartItem cartItem;
 
-        if(cartItemOptional.isEmpty()) {
+        if (cartItemOptional.isEmpty()) {
             cartItem = new CartItem();
             cartItem.setProduct(product);
             cartItem.setPrice(product.getPrice());
+            cartItem.setDiscountPrice(product.getDiscountPrice());
             cartItem.setQuantity(addItemToCartVM.getQuantity());
 
             cartItem.setCreatedAt(Instant.now());
             cartItem.setUpdatedAt(Instant.now());
 
             cartItem.setCart(cart);
-        }else{
+        } else {
             cartItem = cartItemOptional.get();
             cartItem.setQuantity(cartItem.getQuantity() + addItemToCartVM.getQuantity());
-            if(cartItem.getQuantity() > product.getQuantity()){
+            if (cartItem.getQuantity() > product.getQuantity()) {
                 throw new IllegalArgumentException("Quantity cannot be higher than product quantity");
             }
         }
 
         cartItemRepository.saveAndFlush(cartItem);
     }
-
-
 }

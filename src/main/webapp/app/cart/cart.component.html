@@ -1,29 +1,46 @@
 <div class="cart">
- <div class="cart-item-column">
-
-   <div *ngFor="let item of cartItems" >
-     <hr>
-      <div class="cart-item" *ngIf="item.prod" >
+  <div class="cart-item-column">
+    <div *ngFor="let item of cartItems">
+      <hr />
+      <div class="cart-item" *ngIf="item.prod && item.price && item.quantity">
         <div class="cart-item-image-wrapper">
-          <img class="cart-item-image" alt="{{item.prod.name}}">
+          <img
+            *ngIf="item.prod.images && item.prod.images.length > 0"
+            class="cart-item-image"
+            src="{{ this.imageUrl + item.prod.images[0].fileName }}"
+          />
+          <img
+            *ngIf="!item.prod.images || item.prod.images.length == 0"
+            class="cart-item-image"
+            src="https://www.marketing91.com/wp-content/uploads/2018/08/Product-Portfolio-1.jpg"
+          />
         </div>
         <div class="cart-item-text">
-          <h3>{{item.prod.name}}</h3>
-          <h4>Price per one: {{item.price}}</h4>
-          <h5>Quantity: {{item.quantity}}</h5>
+          <h3>{{ item.prod.name }}</h3>
+          <h6 *ngIf="!item.discountPrice">Price per one: {{ item.price }}$</h6>
 
+          <h6 *ngIf="item.discountPrice">
+            Price per one:
+            <span class="striked-price">{{ item.price }}$</span>
+            <span class="discounted-price"> {{ item.discountPrice }}$</span>
+          </h6>
+
+          <h5>Quantity: {{ item.quantity }}</h5>
+          <h6 *ngIf="!item.discountPrice">Total price: {{ item.quantity * item.price }}$</h6>
+          <h6 *ngIf="item.discountPrice">
+            Total price: <span class="discounted-price">{{ item.quantity * item.discountPrice }}$ </span>
+          </h6>
         </div>
       </div>
-     <hr>
-   </div>
-
+      <hr />
+    </div>
   </div>
   <div class="cart-summary-column">
     <h2>Podsumowanie</h2>
     <div class="cart-summary-box">
-      <p class="cart-summary-text-line">
-        <p>Wartość produktów:</p>
-        <p>0.00 zł</p>
+      <p class="cart-summary-text-line"></p>
+      <p>Wartość produktów:</p>
+      <p>{{ totalPrice() }}$</p>
       <button class="cart-summary-button">Złóż zamówienie</button>
     </div>
   </div>

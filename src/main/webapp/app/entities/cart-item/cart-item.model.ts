@@ -5,6 +5,7 @@ import { ICart } from 'app/entities/cart/cart.model';
 export interface ICartItem {
   id?: number;
   price?: number | null;
+  discountPrice?: number | null;
   quantity?: number | null;
   createdAt?: dayjs.Dayjs | null;
   updatedAt?: dayjs.Dayjs | null;
@@ -16,6 +17,7 @@ export class CartItem implements ICartItem {
   constructor(
     public id?: number,
     public price?: number | null,
+    public discountPrice?: number | null,
     public quantity?: number | null,
     public createdAt?: dayjs.Dayjs | null,
     public updatedAt?: dayjs.Dayjs | null,

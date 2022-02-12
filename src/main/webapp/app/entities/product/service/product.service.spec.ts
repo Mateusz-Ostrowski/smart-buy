@@ -29,7 +29,7 @@ describe('Product Service', () => {
       name: 'AAAAAAA',
       price: 0,
       quantity: 0,
-      discountPercent: 0,
+      discountPrice: 0,
       status: ProductStatus.DRAFT,
       createdAt: currentDate,
       updatedAt: currentDate,

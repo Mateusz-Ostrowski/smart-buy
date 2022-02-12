@@ -13,48 +13,44 @@ Main page styles
 .cart-item-column {
   width: calc(100% - 250px);
   overflow-y: scroll;
-  float:left;
-  height:80vh;
+  float: left;
+  height: 80vh;
 }
 
-.cart-item-image-wrapper{
+.cart-item-image-wrapper {
   height: 25vh;
   width: 25vh;
-  border: 1px blue solid;
-  float:left;
-  margin:15px;
-
+  float: left;
+  margin: 15px;
 }
 
-.cart-item-image{
-
+.cart-item-image {
+  max-width: 100%;
 }
 
-.cart-item-text{
+.cart-item-text {
   height: 25vh;
   width: 25vh;
-  border: 1px blue solid;
-  float:left;
+  float: left;
   margin: 15px 15px 15px 3vw;
 }
-.cart-item{
-  display:inline-block;
+.cart-item {
+  display: inline-block;
 }
-.cart-summary-column{
-  width:250px;
-  float:right;
+.cart-summary-column {
+  width: 250px;
+  float: right;
   align-items: center;
   justify-content: center;
   justify-items: center;
   text-align: center;
 }
 
-.cart-summary-text-line{
+.cart-summary-text-line {
   justify-content: space-between;
 }
-.cart-summary-button{
+.cart-summary-button {
 }
-
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),

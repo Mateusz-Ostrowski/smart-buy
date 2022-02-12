@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Sanitizer } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -7,7 +7,8 @@ import dayjs from 'dayjs/esm';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IFileInfo, getFileInfoIdentifier } from '../file-info.model';
+import { IFileInfo, getFileInfoIdentifier, FileInfo } from '../file-info.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export type EntityResponseType = HttpResponse<IFileInfo>;
 export type EntityArrayResponseType = HttpResponse<IFileInfo[]>;
@@ -15,8 +16,13 @@ export type EntityArrayResponseType = HttpResponse<IFileInfo[]>;
 @Injectable({ providedIn: 'root' })
 export class FileInfoService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/file-infos');
+  protected uploadUrl = this.applicationConfigService.getEndpointFor('api/upload');
 
-  constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
+  constructor(
+    protected http: HttpClient,
+    protected applicationConfigService: ApplicationConfigService,
+    protected sanitizer: DomSanitizer
+  ) {}
 
   create(fileInfo: IFileInfo): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(fileInfo);
@@ -71,6 +77,14 @@ export class FileInfoService {
       return [...fileInfosToAdd, ...fileInfoCollection];
     }
     return fileInfoCollection;
+  }
+
+  upload(file: File): Observable<FileInfo> {
+    const formData = new FormData();
+
+    formData.append('file', file, file.name);
+
+    return this.http.post(this.uploadUrl, formData);
   }
 
   protected convertDateFromClient(fileInfo: IFileInfo): IFileInfo {

@@ -1,9 +1,13 @@
 package com.sysect.smartbuy.service.impl;
 
+import com.sysect.smartbuy.domain.FileInfo;
 import com.sysect.smartbuy.domain.Product;
+import com.sysect.smartbuy.repository.FileInfoRepository;
 import com.sysect.smartbuy.repository.ProductRepository;
 import com.sysect.smartbuy.service.ProductService;
+import com.sysect.smartbuy.service.dto.FileInfoDTO;
 import com.sysect.smartbuy.service.dto.ProductDTO;
+import com.sysect.smartbuy.service.mapper.FileInfoMapper;
 import com.sysect.smartbuy.service.mapper.ProductMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -23,22 +27,36 @@ public class ProductServiceImpl implements ProductService {
     private final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     private final ProductRepository productRepository;
+    private final FileInfoRepository fileInfoRepository;
 
     private final ProductMapper productMapper;
+    private final FileInfoMapper fileInfoMapper;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
+    public ProductServiceImpl(
+        ProductRepository productRepository,
+        FileInfoRepository fileInfoRepository,
+        ProductMapper productMapper,
+        FileInfoMapper fileInfoMapper
+    ) {
         this.productRepository = productRepository;
+        this.fileInfoRepository = fileInfoRepository;
         this.productMapper = productMapper;
+        this.fileInfoMapper = fileInfoMapper;
     }
 
+    @Transactional
     @Override
     public ProductDTO save(ProductDTO productDTO) {
         log.debug("Request to save Product : {}", productDTO);
         Product product = productMapper.toEntity(productDTO);
+        for (Long id : productDTO.getFileIds()) {
+            product.addImages(fileInfoRepository.findById(id).get());
+        }
         product = productRepository.save(product);
         return productMapper.toDto(product);
     }
 
+    @Transactional
     @Override
     public Optional<ProductDTO> partialUpdate(ProductDTO productDTO) {
         log.debug("Request to partially update Product : {}", productDTO);
@@ -47,7 +65,9 @@ public class ProductServiceImpl implements ProductService {
             .findById(productDTO.getId())
             .map(existingProduct -> {
                 productMapper.partialUpdate(existingProduct, productDTO);
-
+                for (Long id : productDTO.getFileIds()) {
+                    existingProduct.addImages(fileInfoRepository.findById(id).get());
+                }
                 return existingProduct;
             })
             .map(productRepository::save)
@@ -63,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<ProductDTO> findAllByCategoryIdAndStatusPublished(Long categoryId, Pageable pageable) {
-        return productRepository.findAllByCategoryAndPublishedStatus(categoryId,pageable).map(productMapper::toDto);
+        return productRepository.findAllByCategoryAndPublishedStatus(categoryId, pageable).map(productMapper::toDto);
     }
 
     @Override

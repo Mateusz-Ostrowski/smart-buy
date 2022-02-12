@@ -15,7 +15,7 @@ public class FileInfoDTO implements Serializable {
 
     private String originalFileName;
 
-    private Integer fileSize;
+    private Long fileSize;
 
     private Instant createdAt;
 
@@ -47,11 +47,11 @@ public class FileInfoDTO implements Serializable {
         this.originalFileName = originalFileName;
     }
 
-    public Integer getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(Integer fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 

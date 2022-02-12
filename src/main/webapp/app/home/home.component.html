@@ -19,21 +19,19 @@
 <div class="gallery-app-container">
   <ul class="filter-menu">
     <li>
-        <span class="category-header">Kategorie</span>
-      <div aria-hidden="false" class="rah-static rah-static--height-auto" style="height: auto; overflow: visible;">
+      <span class="category-header">Kategorie</span>
+      <div aria-hidden="false" class="rah-static rah-static--height-auto" style="height: auto; overflow: visible">
         <div>
-            <ul class="category-list">
-              <li class="category-option">
-                <a [routerLink]="['', ]">
-                  Wszystkie
-                </a>
-              </li>
-              <li *ngFor="let category of categories" class="category-option">
-                <a [routerLink]="['/categories/', category.id]">
-                  {{category.name}}
-                </a>
-              </li>
-            </ul>
+          <ul class="category-list">
+            <li class="category-option">
+              <a [routerLink]="['']"> Wszystkie </a>
+            </li>
+            <li *ngFor="let category of categories" class="category-option">
+              <a [routerLink]="['/categories/', category.id]">
+                {{ category.name }}
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </li>
@@ -45,26 +43,35 @@
     </li>
   </ul>
   <div class="gallery-list-container">
-    <h1 class="no-products-found" *ngIf="products?.length == 0"> Nie znaleziono zadnych produktów dla podanych filtrów/kategorii </h1>
+    <h1 class="no-products-found" *ngIf="products?.length == 0">Nie znaleziono zadnych produktów dla podanych filtrów/kategorii</h1>
     <div class="product-list">
-
       <!-- It's likely you'll need to link the card somewhere. You could add a button in the info, link the titles, or even wrap the entire card in an <a href="..."> -->
-        <div *ngFor="let product of products" class="product-card">
-          <a [routerLink]="['/product', product.id, 'view']">
+      <div *ngFor="let product of products" class="product-card">
+        <a [routerLink]="['/product', product.id, 'view']">
           <div class="product-image">
-            <img src="https://www.marketing91.com/wp-content/uploads/2018/08/Product-Portfolio-1.jpg">
+            <img
+              *ngIf="product.images && product.images.length > 0"
+              class="cart-item-image"
+              src="{{ this.imageUrl + this.product.images[0].fileName }}"
+            />
+            <img
+              *ngIf="!product.images || product.images.length == 0"
+              src="https://www.marketing91.com/wp-content/uploads/2018/08/Product-Portfolio-1.jpg"
+            />
           </div>
-          </a>
-          <div class="product-details">
-            <h5>{{product.name}}</h5>
-            <h6>{{product.price}}</h6>
-          </div>
-          <button (click)="addToCart(product.id)">Add to cart</button>
+        </a>
+        <div class="product-details">
+          <h5 class="product-name">{{ product.name }}</h5>
+          <h6 *ngIf="!product.discountPrice">{{ product.price }}$</h6>
+          <h6 *ngIf="product.discountPrice">
+            <span class="striked-price">{{ product.price }}$</span>
+            <span class="discounted-price">{{ product.discountPrice }}$</span>
+          </h6>
         </div>
-
+        <button (click)="addToCart(product.id)">Add to cart</button>
+      </div>
 
       <!-- more products -->
-
     </div>
   </div>
 </div>
